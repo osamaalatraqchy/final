@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "209240113331",
+    "project_id": "jobs-ef6ba",
+    "storage_bucket": "jobs-ef6ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:209240113331:android:1cfd7c253ae50d1c9a70c6",
+        "android_client_info": {
+          "package_name": "com.example.jobfinder"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "209240113331-14h7mug8569ad8jm412gtkv52rhlj041.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHhfqXWbxD03eSYvSlr9-UNJUiIqgwx4E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "209240113331-14h7mug8569ad8jm412gtkv52rhlj041.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

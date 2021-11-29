@@ -4,7 +4,7 @@ import 'package:jobfinder/provider/auth.dart';
 import 'package:jobfinder/screens/home.dart';
 import 'package:provider/src/provider.dart';
 
-import 'screens/signin.dart';
+import 'screens/login.dart';
 
 class AuthState extends StatelessWidget {
   const AuthState({Key? key}) : super(key: key);
@@ -17,7 +17,7 @@ class AuthState extends StatelessWidget {
         if (snapshot.hasData) {
           return Home();
         }
-        return SignIn();
+        return Home();
       },
     );
   }

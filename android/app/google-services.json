@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "209240113331-8sl7eapcpb1rjof2tnrgj42103kn41k1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jobfinder",
+            "certificate_hash": "742673be3ec94cab0ba0d176b02adff2dd79d197"
+          }
+        },
+        {
           "client_id": "209240113331-14h7mug8569ad8jm412gtkv52rhlj041.apps.googleusercontent.com",
           "client_type": 3
         }

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthProvider with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
@@ -38,6 +39,26 @@ class AuthProvider with ChangeNotifier {
         email: e.email,
         credential: e.credential,
       );
+    }
+  }
+
+  Future<UserCredential> googleSignInProvider() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(
+          code: e.code,
+          message: e.message,
+          credential: e.credential,
+          email: e.email,
+          phoneNumber: e.phoneNumber);
     }
   }
 }

@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:jobfinder/provider/auth.dart';
 import 'package:jobfinder/widgets/error_dialog.dart';
 import 'package:jobfinder/widgets/signin_widgets.dart';

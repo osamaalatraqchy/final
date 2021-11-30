@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jobfinder/provider/auth.dart';
 import 'package:jobfinder/screens/signin.dart';
-import 'package:jobfinder/widgets/login_widgets.dart';
+import 'package:jobfinder/widgets/home_widgets.dart';
 import 'package:provider/src/provider.dart';
 
 class Home extends StatefulWidget {

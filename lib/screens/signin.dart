@@ -1,5 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:jobfinder/provider/auth.dart';
+import 'package:jobfinder/screens/forgot_password.dart';
+import 'package:jobfinder/widgets/error_dialog.dart';
 import 'package:jobfinder/widgets/signin_widgets.dart';
+import 'package:provider/src/provider.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -48,8 +53,17 @@ class _SignInState extends State<SignIn> {
                             Expanded(
                               child: buttons(
                                   text: 'Sign in',
-                                  event: () {
-                                    print('Sin in button');
+                                  event: () async {
+                                    try {
+                                      await context
+                                          .read<AuthProvider>()
+                                          .signInWithEmailAndPassword(
+                                              _emailController.text,
+                                              _passwordController.text);
+                                    } on FirebaseAuthException catch (e) {
+                                      showError(context, 'Error ${e.code}',
+                                          e.message!);
+                                    }
                                   }),
                             ),
                             const SizedBox(
@@ -59,7 +73,13 @@ class _SignInState extends State<SignIn> {
                               child: buttons(
                                   text: 'Forgot password',
                                   event: () {
-                                    print('Forgot button');
+                                    FocusScope.of(context).unfocus();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => const ForgotPassword(),
+                                      ),
+                                    );
                                   }),
                             ),
                           ],

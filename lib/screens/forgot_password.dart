@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:jobfinder/provider/auth.dart';
+import 'package:jobfinder/widgets/error_dialog.dart';
+import 'package:jobfinder/widgets/signin_widgets.dart';
 import 'package:provider/src/provider.dart';
 
 class ForgotPassword extends StatefulWidget {
@@ -13,64 +15,54 @@ class ForgotPassword extends StatefulWidget {
 }
 
 class _ForgotPasswordState extends State<ForgotPassword> {
+  final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
         title: const Text('Reset your password'),
         elevation: 0,
         backgroundColor: Colors.transparent,
-        foregroundColor: Colors.grey.shade600,
         centerTitle: true,
       ),
-      body: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.85,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Enter email addrress',
-                style: GoogleFonts.lato(),
-              ),
-              TextField(
-                controller: _emailController,
-                keyboardType: TextInputType.emailAddress,
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await context
-                        .read<AuthProvider>()
-                        .sendForgotPasswordLink(_emailController.text);
-                    Navigator.pop(context);
-                  } on FirebaseAuthException catch (e) {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text('Error'),
-                            content: SingleChildScrollView(
-                              child: Text(e.message!),
-                            ),
-                            actions: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                child: const Text('OK'),
-                              ),
-                            ],
-                          );
-                        });
-                  }
-                },
-                child: const Text('Send link'),
-              ),
-            ],
+      body: Container(
+        decoration: const BoxDecoration(
+          color: Color(0xff2d2d2d),
+        ),
+        width: double.infinity,
+        height: double.infinity,
+        child: Center(
+          child: Form(
+            key: _formKey,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                textFields(
+                    controller: _emailController,
+                    hintText: 'Emaill address',
+                    secureText: false),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: buttons(
+                        text: 'Send link',
+                        event: () async {
+                          try {
+                            await context
+                                .read<AuthProvider>()
+                                .sendForgotPasswordLink(_emailController.text);
+                          } on FirebaseAuthException catch (e) {
+                            showError(context, 'Error ${e.code}', e.message!);
+                          }
+                        }),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

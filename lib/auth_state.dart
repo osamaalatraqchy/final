@@ -4,7 +4,7 @@ import 'package:jobfinder/provider/auth.dart';
 import 'package:jobfinder/screens/home.dart';
 import 'package:provider/src/provider.dart';
 
-import 'screens/login.dart';
+import 'screens/signin.dart';
 
 class AuthState extends StatelessWidget {
   const AuthState({Key? key}) : super(key: key);

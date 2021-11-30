@@ -9,6 +9,8 @@ class SignIn extends StatefulWidget {
 
 class _SignInState extends State<SignIn> {
   final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,8 +36,85 @@ class _SignInState extends State<SignIn> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TextFormField(),
-                  TextFormField(),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _emailController,
+                      keyboardType: TextInputType.emailAddress,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Color(0xff2d2d2d),
+                        hintText: 'Email address',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.5),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.5),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Color(0xff2d2d2d),
+                        hintText: 'Password',
+                        hintStyle: TextStyle(
+                          color: Color.fromRGBO(255, 255, 255, 0.4),
+                        ),
+                      ),
+                      style: const TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.4),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Sign in'),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                  const Color(0xff333333),
+                                ),
+                                padding: MaterialStateProperty.all(
+                                  const EdgeInsets.all(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Forgot password'),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                  const Color(0xff333333),
+                                ),
+                                padding: MaterialStateProperty.all(
+                                  const EdgeInsets.all(15),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

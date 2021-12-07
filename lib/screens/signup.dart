@@ -7,14 +7,16 @@ import 'package:jobfinder/widgets/signin_widgets.dart';
 import 'package:provider/src/provider.dart';
 import 'package:email_validator/email_validator.dart';
 
-class SignIn extends StatefulWidget {
-  const SignIn({Key? key}) : super(key: key);
+import 'signin.dart';
+
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  _SignInState createState() => _SignInState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _SignInState extends State<SignIn> {
+class _SignUpState extends State<SignUp> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -22,7 +24,14 @@ class _SignInState extends State<SignIn> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: appbar(),
+      appBar: AppBar(
+        title: const Text(
+          'Create a new account',
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -96,16 +105,34 @@ class _SignInState extends State<SignIn> {
                           children: [
                             Expanded(
                               child: buttons(
-                                  text: 'Sign in',
+                                  text: 'Sign up',
                                   event: () async {
                                     if (_formKey.currentState!.validate()) {
                                       try {
-                                        await context
+                                        final userCred = await context
                                             .read<AuthProvider>()
-                                            .signInWithEmailAndPassword(
-                                                _emailController.text,
-                                                _passwordController.text);
-                                        Navigator.pop(context);
+                                            .createUserWithEmailAndPassword(
+                                              _emailController.text,
+                                              _passwordController.text,
+                                            );
+                                        await userCred!.user!
+                                            .sendEmailVerification();
+                                        ScaffoldMessenger.of(context)
+                                            .showMaterialBanner(
+                                          MaterialBanner(
+                                              content: const Text(
+                                                  'Email verification has been sent.'),
+                                              actions: [
+                                                TextButton(
+                                                  onPressed: () {
+                                                    ScaffoldMessenger.of(
+                                                            context)
+                                                        .clearMaterialBanners();
+                                                  },
+                                                  child: const Text('OK'),
+                                                ),
+                                              ]),
+                                        );
                                       } on FirebaseAuthException catch (e) {
                                         showError(context, 'Error ${e.code}',
                                             e.message!);
@@ -117,15 +144,16 @@ class _SignInState extends State<SignIn> {
                               width: 10,
                             ),
                             Expanded(
+                              flex: 2,
                               child: buttons(
-                                  text: 'Forgot password',
+                                  text: 'Already have an account',
                                   event: () {
                                     FocusScope.of(context).unfocus();
                                     Navigator.pop(context);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (_) => const ForgotPassword(),
+                                        builder: (_) => const SignIn(),
                                       ),
                                     );
                                   }),

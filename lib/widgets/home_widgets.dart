@@ -81,13 +81,15 @@ googleSignIn(BuildContext context, Function event) {
   );
 }
 
-newAccountBUtton(BuildContext context) {
+newAccountButton({required BuildContext context, required Function event}) {
   return Padding(
     padding: const EdgeInsets.all(10),
     child: SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed: () {
+          event();
+        },
         child: const Text('Create new account'),
         style: ButtonStyle(
           backgroundColor: MaterialStateProperty.all(Colors.black12),

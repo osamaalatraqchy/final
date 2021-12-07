@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:jobfinder/provider/auth.dart';
 import 'package:jobfinder/screens/signin.dart';
+import 'package:jobfinder/screens/signup.dart';
+import 'package:jobfinder/widgets/error_dialog.dart';
 import 'package:jobfinder/widgets/home_widgets.dart';
 import 'package:provider/src/provider.dart';
 
@@ -43,14 +45,20 @@ class _HomeState extends State<Home> {
               try {
                 final user =
                     await context.read<AuthProvider>().googleSignInProvider();
-                print(user);
               } on FirebaseAuthException catch (e) {
-                print(e);
+                showError(context, e.code, e.message!);
               } on PlatformException catch (e) {
-                print(e);
+                showError(context, e.code, e.message!);
               }
             }),
-            newAccountBUtton(context),
+            newAccountButton(
+                context: context,
+                event: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => SignUp()),
+                  );
+                }),
             const Spacer(),
           ],
         ),

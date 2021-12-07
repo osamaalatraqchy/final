@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfinder/provider/auth.dart';
@@ -38,10 +39,31 @@ class _ForgotPasswordState extends State<ForgotPassword> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-                textFields(
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
                     controller: _emailController,
-                    hintText: 'Emaill address',
-                    secureText: false),
+                    validator: (value) {
+                      if (value!.isEmpty || !EmailValidator.validate(value)) {
+                        return 'Please enter a valid email address.';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      filled: true,
+                      fillColor: Color(0xff2d2d2d),
+                      hintText: 'Email address',
+                      hintStyle: TextStyle(
+                        color: Color.fromRGBO(255, 255, 255, 0.5),
+                      ),
+                    ),
+                    style: const TextStyle(
+                      color: Color.fromRGBO(255, 255, 255, 0.5),
+                    ),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SizedBox(
@@ -49,12 +71,15 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                     child: buttons(
                         text: 'Send link',
                         event: () async {
-                          try {
-                            await context
-                                .read<AuthProvider>()
-                                .sendForgotPasswordLink(_emailController.text);
-                          } on FirebaseAuthException catch (e) {
-                            showError(context, 'Error ${e.code}', e.message!);
+                          if (_formKey.currentState!.validate()) {
+                            try {
+                              await context
+                                  .read<AuthProvider>()
+                                  .sendForgotPasswordLink(
+                                      _emailController.text);
+                            } on FirebaseAuthException catch (e) {
+                              showError(context, 'Error ${e.code}', e.message!);
+                            }
                           }
                         }),
                   ),

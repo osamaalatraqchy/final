@@ -11,19 +11,22 @@ class AuthProvider with ChangeNotifier {
     await _auth.signOut();
   }
 
-  signInWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential?> signInWithEmailAndPassword(
+      String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return await _auth.signInWithEmailAndPassword(
+          email: email, password: password);
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
     }
   }
 
-  createUserWithEmailAndPassword(String email, String password) async {
+  Future<UserCredential?> createUserWithEmailAndPassword(
+      String email, String password) async {
     try {
       final user = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
-      await user.user!.sendEmailVerification();
+      return user;
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
     }

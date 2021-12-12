@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfinder/provider/auth.dart';
-import 'package:jobfinder/screens/forgot_password.dart';
 import 'package:jobfinder/widgets/error_dialog.dart';
 import 'package:jobfinder/widgets/signin_widgets.dart';
 import 'package:provider/src/provider.dart';

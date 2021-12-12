@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:jobfinder/provider/auth.dart';
 import 'package:jobfinder/auth_state.dart';
+import 'package:jobfinder/provider/permission.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -12,6 +13,9 @@ void main() async {
       providers: [
         ChangeNotifierProvider(
           create: (_) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => PermissionAsk(),
         ),
       ],
       child: const MyApp(),
